@@ -1,13 +1,14 @@
 import React from 'react'
-import { auth, googleProvider } from './firebase'
+import { auth, googleProvider } from '../utils/firebase'
 import { signInWithPopup } from 'firebase/auth'
 import api from '../utils/axios'
 
 function Home() {
+    const { user } = useSelector((state) => state.user)
 
     const handlerlogin = async (token) => {
         try {
-            const { data } = await api.post('/auth/login', { token })
+            const { data } = await api.post('/api/auth/login', { token })
             console.log(data)
         } catch (error) {
             console.error("Error occurred while logging in:", error)

@@ -7,7 +7,7 @@ export const login = async (req, res) => {
     try {
         const { token } = req.body;
         const decoded = getAuth(app).verifyIdToken(token)
-        const user = await User.findOne({ firebaseUid: (await decoded).uid });
+        let user = await User.findOne({ firebaseUid: (await decoded).uid });
 
         if (!user) {
             user = await User.create({
@@ -27,7 +27,7 @@ export const login = async (req, res) => {
 
             res.cookie("session", sessionid, {
                 httpOnly: true,
-                secure: true,
+                secure: false,
                 sameSite: "strict",
                 maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days in msec
             });
