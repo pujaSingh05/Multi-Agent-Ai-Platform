@@ -1,15 +1,11 @@
-import React from 'react'
-import { auth, googleProvider } from '../utils/firebase'
+import React, { useEffect } from 'react'
 import { getCurrentUser } from '../features/getCurrentUser'
 import { useDispatch } from 'react-redux'
 import { setUserdata } from '../features/userSlice'
-import { useEffect } from 'react'
 import Home from './Home'
-
 import api from '../utils/axios'
 
 function App() {
-
 
   const dispatch = useDispatch()
   useEffect(() => {
