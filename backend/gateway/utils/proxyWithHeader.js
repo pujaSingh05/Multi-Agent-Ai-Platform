@@ -1,4 +1,6 @@
-const proxyWithHeader = (serviceUrl) => {
+import proxy from "express-http-proxy"
+
+export const proxyWithHeader = (serviceUrl) => {
     return proxy(serviceUrl, {
         proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
             // Add the Authorization header from the original request to the proxied request

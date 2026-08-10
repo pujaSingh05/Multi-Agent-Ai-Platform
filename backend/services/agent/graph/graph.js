@@ -1,21 +1,21 @@
-import { Stategraph } from '@langchain/langgraph';
+import { StateGraph } from "@langchain/langgraph";
 import { agentState } from './state.js';
 import { router } from './router.js';
 import { chatAgent } from '../agents/chatAgent.js';
 import { searchAgent } from '../agents/searchAgent.js';
 import { codingAgent } from '../agents/codingAgent.js';
-import { imageGenAgent } from '../agents/imageGenAgent.js';
+import { imageAnalyzer } from '../agents/imageGenAgent.js';
 import { pdfAgent } from '../agents/pdfAgent.js';
 import { pptAgent } from '../agents/pptAgent.js';
 
-const workflow = new Stategraph(agentState);
+const workflow = new StateGraph(agentState);
 
 
 workflow.addNode("router", router);
 workflow.addNode("chatAgent", chatAgent);
 workflow.addNode("searchAgent", searchAgent);
 workflow.addNode("codingAgent", codingAgent);
-workflow.addNode("imageGenAgent", imageGenAgent);
+workflow.addNode("imageGenAgent", imageAnalyzer);
 workflow.addNode("pdfAgent", pdfAgent);
 workflow.addNode("pptAgent", pptAgent);
 

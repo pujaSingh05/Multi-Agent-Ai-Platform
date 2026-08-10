@@ -4,6 +4,9 @@ import proxy from 'express-http-proxy'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { proxyWithHeader } from './utils/proxyWithHeader.js';
+import { getCurrentUser } from "./controllers/user_controller.js"
+import protect from "./middleware/auth_middleware.js"
+import morgan from "morgan"
 
 dotenv.config()
 
@@ -16,6 +19,7 @@ app.use(cors({
     credentials: true
 }))
 
+app.use(morgan("dev"))
 app.use(cookieParser())
 
 
@@ -23,16 +27,13 @@ app.use(cookieParser())
 app.use("/api/auth", proxy(process.env.AUTH_SERVICE_URL))
 //Proxy requests to the chat service
 app.use("/api/chat", protect, proxyWithHeader(process.env.CHAT_SERVICE_URL))
-
 app.use("/api/agent", protect, proxyWithHeader(process.env.AGENT_SERVICE_URL))
-
+app.use("/api/billing", protect, proxyWithHeader(process.env.BILLING_SERVICE))
 app.get('/api/me', protect, getCurrentUser);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Gateway Server')
 });
-
-app.get('/api/me', protect, getCurrentUser);
 
 app.listen(port, () => {
     console.log(`Gateway server is running on port ${port}`);

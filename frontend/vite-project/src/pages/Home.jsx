@@ -1,10 +1,16 @@
-import React from 'react'
-import { auth, googleProvider } from '../utils/firebase'
 import { signInWithPopup } from 'firebase/auth'
-import api from '../utils/axios'
+import React from 'react'
+import { auth, googleProvider } from '../../utils/firebase.js'
+import api from '../../utils/axios.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserdata } from '../redux/userSlice.js'
+import SideBar from '../components/SideBar';
+import ChatArea from '../components/ChatArea';
+import Artifact from '../components/Artifact';
 
 function Home() {
-    const { user } = useSelector((state) => state.user)
+    const { userData } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
 
     const handlerlogin = async (token) => {
         try {
@@ -25,9 +31,23 @@ function Home() {
 
     return (
         <div className='h-screen flex bg-[#0d0f14] text-white overflow-hidden'>
-            <div className='flex flex-col justify-center items-center w-full'>
+            <SideBar />
+            <ChatArea />
+            <Artifact />
 
-            </div>
+            {!userData && <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur'>
+                <div className='w-[340px] bg-[#13151c] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5'>
+                    <div className='flex flex-col gap-1'>
+                        <h2 className='text-[17px] font-semibold text-slate-100 tracking-tight'>Welcome to CortexAI</h2>
+                        <p className='text-[13px] text-slate-500'>Please login to continue using the app.</p>
+                    </div>
+
+                    <button className='w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-black/90 bg-white hover:bg-gray-200  transition-all duration-150 cursor-pointer' onClick={googleLogin}>
+                        <FcGoogle size={15} />
+                        Continue With Google
+                    </button>
+                </div>
+            </div>}
         </div>
     )
 }

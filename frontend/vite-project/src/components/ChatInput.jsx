@@ -1,11 +1,11 @@
 import { Code2, FileText, Globe, ImageIcon, MessageSquare, Mic, MicOff, Paperclip, Presentation, Send, X, Zap } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import sendMessage from '../features/sendMessage'
+import sendMessage from '../../features/sendMessage'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMessage, setArtifacts, setIsLoading, setMessages } from '../redux/messageSlice'
-import { createConversation } from '../features/createConversation'
+import { createConversation } from '../../features/createConversation'
 import { addConversation, setConvTitle, setSelectedConversation } from '../redux/conversationSlice'
-import { updateConversation } from '../features/updateConversation'
+import { updateConversation } from '../../features/updateConversation'
 import { useRef } from 'react'
 
 
@@ -249,18 +249,18 @@ function ChatInput() {
             </button>
             <button
               onClick={toggleMic}
-              className={`flex items-center justify-center w-8 h-8 rounded-lg  transition-all duration-150 cursor-pointer ${listening ?"bg-red-500 text-white":"text-slate-600 hover:bg-white/[0.05]" }`}>
-             {listening?<Mic size={16} />:<MicOff size={16}/>} 
+              className={`flex items-center justify-center w-8 h-8 rounded-lg  transition-all duration-150 cursor-pointer ${listening ? "bg-red-500 text-white" : "text-slate-600 hover:bg-white/[0.05]"}`}>
+              {listening ? <Mic size={16} /> : <MicOff size={16} />}
             </button>
           </div>
           <button
             disabled={!value && isLoading}
             onClick={handleSendMessage}
             className={`flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all duration-150 ${value.trim() ? "bg-linear-to-br from-indigo-500 to-violet-700 hover:opacity-90 text-white" : "bg-white/[0.05] text-slate-600 cursor-not-allowed"}`}>
-          <Send size={15} />
-        </button>
+            <Send size={15} />
+          </button>
+        </div>
       </div>
-    </div>
     </div >
   )
 }

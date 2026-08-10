@@ -18,13 +18,18 @@ const userSchema = new mongoose.Schema({
     avatar: String,
     credits: {
         type: Number,
-        default: 0
+        default: "100"
     },
     totalCredits: {
         type: Number,
-        default: 0
+        default: 100
+    },
+    plan: {
+        type: String,
+        default: "free"
     },
     planExpiresAt: Date,
+}, {
     timestamps: true
 })
 

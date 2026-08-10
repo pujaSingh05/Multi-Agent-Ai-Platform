@@ -1,10 +1,9 @@
-import express from "express";
-import { agent } from "../controllers/agentController";
+import express from "express"
+import { agent } from "../controllers/agentController.js"
+import multer from "../config/multer.js"
 
+const router = express.Router()
 
+router.post("/chat", multer.single("file"), agent)
 
-const router = express.Router();
-
-router.post("/chat", agent)
-
-export default router;
+export default router

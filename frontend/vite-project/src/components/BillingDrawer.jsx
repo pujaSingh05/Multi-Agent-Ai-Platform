@@ -2,8 +2,8 @@ import React from 'react'
 import { AnimatePresence, motion } from "motion/react"
 import { Crown, X } from 'lucide-react'
 import { useSelector } from 'react-redux'
-import { createOrder } from '../features/createOrder'
-import { verifyPayment } from '../features/verifyPayment'
+import { createOrder } from '../../features/createOrder'
+import { verifyPayment } from '../../features/verifyPayment'
 function BillingDrawer({ open, onClose }) {
 
     const { userData } = useSelector(state => state.user)

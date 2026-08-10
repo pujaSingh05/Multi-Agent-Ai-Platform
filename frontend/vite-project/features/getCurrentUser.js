@@ -1,4 +1,4 @@
-import api from '../utils/api';
+import api from '../utils/axios'
 
 const getCurrentUser = async () => {
     try {
@@ -7,8 +7,8 @@ const getCurrentUser = async () => {
         console.log(data)
     } catch (error) {
         console.error('Error fetching current user:', error);
-        return null;
+        return [];
     }
 }
 
-export default getCurrentUser;
+export default getCurrentUser; 
