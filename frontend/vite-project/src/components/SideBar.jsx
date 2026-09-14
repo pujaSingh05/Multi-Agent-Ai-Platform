@@ -2,12 +2,11 @@ import React from 'react'
 import { Coins, LogOut, Menu, MessageSquare, PanelLeftIcon, PanelRight, PenBoxIcon, PenSquare, Plus, User, X } from "lucide-react"
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { getConversations } from '../../features/getConversations'
+import { getConversations } from '../features/getConversations'
 import { useDispatch, useSelector } from 'react-redux'
 import { addConversation, setConversations, setSelectedConversation } from '../redux/conversationSlice'
-
-import { createConversation } from '../../features/createConversation'
-import logOut from '../../features/logOut'
+import { createConversation } from '../features/createConversation'
+import logOut from '../features/logOut'
 import { setUserdata } from '../redux/userSlice'
 import BillingDrawer from './BillingDrawer'
 function SideBar() {

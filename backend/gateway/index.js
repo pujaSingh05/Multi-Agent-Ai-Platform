@@ -21,10 +21,13 @@ app.use(cors({
 
 app.use(morgan("dev"))
 app.use(cookieParser())
-
+app.use((req, res, next) => {
+    res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups")
+    next()
+})
 
 //Proxy requests to the auth service
-app.use("/api/auth", proxy(process.env.AUTH_SERVICE_URL))
+app.use("/api/auth", proxy("http://localhost:8001"))
 //Proxy requests to the chat service
 app.use("/api/chat", protect, proxyWithHeader(process.env.CHAT_SERVICE_URL))
 app.use("/api/agent", protect, proxyWithHeader(process.env.AGENT_SERVICE_URL))

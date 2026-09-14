@@ -1,5 +1,4 @@
-import React from 'react'
-import api from '../utils/axios'
+import api from "../../utils/axios"
 
 async function logOut() {
     try {

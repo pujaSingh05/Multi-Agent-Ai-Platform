@@ -1,5 +1,5 @@
 
-import api from '../utils/axios'
+import api from "../../utils/axios"
 
 async function getMessages(id) {
     try {

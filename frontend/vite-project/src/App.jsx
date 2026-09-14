@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
-import { getCurrentUser } from '../features/getCurrentUser'
+import { useEffect } from 'react'
+import getCurrentUser from './features/getCurrentUser.js'
 import { useDispatch } from 'react-redux'
 import { setUserdata } from './redux/userSlice.js'
 import Home from '../src/pages/Home.jsx'
-import api from '../utils/axios'
 
 function App() {
 

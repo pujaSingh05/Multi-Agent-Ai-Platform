@@ -88,14 +88,14 @@ function Artifact() {
 
   }
 
-  const PanelContent = ({onClose}) => {
+  const PanelContent = ({ onClose }) => {
     return (
       <>
         {!collapsed ? <div className='flex flex-col h-full bg-[#0d0f14]'>
 
           <div className='h-14 px-4 border-b border-white/[0.06] flex items-center gap-3 shrink-0'>
             <button className='flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer shrink-0' onClick={onClose ?? (() => setCollapsed(true))}>
-              {onClose?<X size={15}/>:<PanelRightClose size={16} />}
+              {onClose ? <X size={15} /> : <PanelRightClose size={16} />}
             </button>
             <div className='flex items-center gap-2 flex-1 min-w-0'>
               <div className='flex items-center justify-center w-6 h-6 rounded-md bg-indigo-500/10 border border-indigo-500/20 shrink-0'>
@@ -216,7 +216,7 @@ function Artifact() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} onClick={() => setMobileOpen(false)} className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" />
 
           <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ duration: 0.25, ease: "easeInOut" }} className="lg:hidden fixed inset-y-0 right-0 z-50 w-[88vw] max-w-[420px] border-l border-white/[0.06] overflow-hidden">
-            <PanelContent onClose={()=>setMobileOpen(false)}/>
+            <PanelContent onClose={() => setMobileOpen(false)} />
           </motion.div>
 
         </>

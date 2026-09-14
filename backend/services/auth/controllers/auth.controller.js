@@ -1,26 +1,30 @@
 import { getAuth } from "firebase-admin/auth"
 import { app } from "../config/firebase.js"
 import User from "../model/userModel.js"
-import { createConnection } from "mongoose"
 import redis from "../../../shared/redis/redis.js"
+import crypto from "crypto"
 
 
 export const login = async (req, res) => {
     try {
         const { token } = req.body;
-        const decoded = getAuth(app).verifyIdToken(token)
-        let user = await User.findOne({ firebaseUid: (await decoded).uid });
+        const decoded = await getAuth(app).verifyIdToken(token)
+        let user = await User.findOne({ firebaseUid: decoded.uid })
 
         if (!user) {
             user = await User.create({
-                firebaseUid: (await decoded).uid,
-                name: (await decoded).name,
-                email: (await decoded).email,
-                avatar: (await decoded).picture
+                firebaseUid: decoded.uid,
+                name: decoded.name,
+                email: decoded.email,
+                avatar: decoded.picture
             })
+        }
 
-            const sessionid = crypto.randomUUID()
-            await redis.set(`session: ${sessionid}`, JSON.stringify({
+        const sessionid = crypto.randomUUID()
+        await redis.set(`user-session-${user?._id}`, sessionid, "EX", 7 * 24 * 60 * 60) // 7 days in secs
+        await redis.set(
+            `session:${sessionid}`,
+            JSON.stringify({
                 userId: user._id,
                 name: user.name,
                 email: user.email,
@@ -29,16 +33,18 @@ export const login = async (req, res) => {
                 credits: user.credits,
                 totalCredits: user.totalCredits,
                 planExpiresAt: user.planExpiresAt
-            }, { EX: 60 * 60 * 24 * 7 })) // 7 days in secs
+            }),
+            "EX",
+            7 * 24 * 60 * 60
+        )
 
-            res.cookie("session", sessionid, {
-                httpOnly: true,
-                secure: false,
-                sameSite: "strict",
-                maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days in msec
-            });
-            return res.status(200).json({ message: "User created and logged in successfully", user });
-        }
+        res.cookie("session", sessionid, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "strict",
+            maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days in msec
+        });
+        return res.status(200).json({ message: "User created and logged in successfully", user });
     } catch (error) {
         console.error("Error occurred while logging in:", error);
         res.status(500).json({ error: "Internal server error" });

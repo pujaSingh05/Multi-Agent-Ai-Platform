@@ -1,29 +1,29 @@
 import { signInWithPopup } from 'firebase/auth'
-import React from 'react'
 import { auth, googleProvider } from '../../utils/firebase.js'
 import api from '../../utils/axios.js'
 import { useDispatch, useSelector } from 'react-redux';
+import { FcGoogle } from "react-icons/fc";
 import { setUserdata } from '../redux/userSlice.js'
 import SideBar from '../components/SideBar';
 import ChatArea from '../components/ChatArea';
 import Artifact from '../components/Artifact';
 
 function Home() {
-    const { userData } = useSelector((state) => state.user)
+    const { userData } = useSelector(state => state.user)
     const dispatch = useDispatch()
 
     const handlerlogin = async (token) => {
         try {
             const { data } = await api.post('/api/auth/login', { token })
-            console.log(data)
+            dispatch(setUserdata(data))
         } catch (error) {
             console.error("Error occurred while logging in:", error)
         }
     }
 
     const googleLogin = async () => {
-        const data = await signInWithPopup(auth, googleProvider);
-        const token = await data.user.getIdToken();
+        const data = await signInWithPopup(auth, googleProvider)
+        const token = await data.user.getIdToken()
         console.log(token)
         await handlerlogin(token)
         console.log(data)
@@ -38,7 +38,7 @@ function Home() {
             {!userData && <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur'>
                 <div className='w-[340px] bg-[#13151c] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5'>
                     <div className='flex flex-col gap-1'>
-                        <h2 className='text-[17px] font-semibold text-slate-100 tracking-tight'>Welcome to CortexAI</h2>
+                        <h2 className='text-[17px] font-semibold text-slate-100 tracking-tight'>Welcome</h2>
                         <p className='text-[13px] text-slate-500'>Please login to continue using the app.</p>
                     </div>
 

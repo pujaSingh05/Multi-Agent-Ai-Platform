@@ -1,11 +1,11 @@
 import { Code2, FileText, Globe, ImageIcon, MessageSquare, Mic, MicOff, Paperclip, Presentation, Send, X, Zap } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import sendMessage from '../../features/sendMessage'
+import sendMessage from '../features/sendMessage'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMessage, setArtifacts, setIsLoading, setMessages } from '../redux/messageSlice'
-import { createConversation } from '../../features/createConversation'
+import { createConversation } from '../features/createConversation'
 import { addConversation, setConvTitle, setSelectedConversation } from '../redux/conversationSlice'
-import { updateConversation } from '../../features/updateConversation'
+import { updateConversation } from '../features/updateConversation'
 import { useRef } from 'react'
 
 
@@ -102,7 +102,7 @@ function ChatInput() {
     const data = await sendMessage(formData)
     dispatch(setIsLoading(false))
     setSelectedFile(null)
-    dispatch(setArtifacts(data.artifacts || []))
+    dispatch(setArtifacts(data?.artifacts || []))
     dispatch(addMessage({ role: "assistant", content: data?.answer, images: data?.images }))
     console.log(data)
   }
