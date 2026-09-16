@@ -80,8 +80,8 @@ export const updateUserPayment = async (req, res) => {
 
         const sessionId = await redis.get(`user-session-${user?._id}`)
         console.log("sessionId", sessionId)
-        await redis.set(`session-${sessionId}`, JSON.stringify({
-            userId: use._id,
+        await redis.set(`session:${sessionId}`, JSON.stringify({
+            userId: user._id,
             name: user.name,
             email: user.email,
             avatar: user.avatar,
@@ -93,8 +93,8 @@ export const updateUserPayment = async (req, res) => {
         return res.status(200).json({ success: true })
 
     } catch (error) {
+        console.error("Error updating user payment:", error)
         return res.status(500).json({ message: `update user payment error ${error}` })
-
     }
 }
 

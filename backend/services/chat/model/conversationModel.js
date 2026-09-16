@@ -8,6 +8,7 @@ const conversationSchema = new mongoose.Schema({
     userId: {
         type: String,
     },
+}, {
     timestamps: true
 })
 

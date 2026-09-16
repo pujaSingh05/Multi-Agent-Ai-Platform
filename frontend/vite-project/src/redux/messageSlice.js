@@ -11,10 +11,10 @@ const messageSlice = createSlice({
 
     reducers: {
         setMessages: (state, action) => {
-            state.message = action.payload
+            state.messages = action.payload
         },
         addMessage: (state, action) => {
-            state.message.push(action.payload)
+            state.messages.push(action.payload)
         },
         setArtifacts: (state, action) => {
             state.artifacts = action.payload

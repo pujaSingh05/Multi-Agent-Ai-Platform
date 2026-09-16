@@ -7,6 +7,6 @@ const router = express.Router();
 router.post("/login", login)
 router.get("/logout", logout)
 router.post("/deduct-credits", deductCredits)
-router.put("/update-payment-plan", updateUserPayment)
+router.post("/update-payment-plan", updateUserPayment)
 
 export default router;

@@ -1,4 +1,5 @@
 import redis from '../../../shared/redis/redis.js'
+import { getMessages } from "../utils/getMessages.js"
 
 export const getMemory = async (conversationId) => {
     // Implementation for fetching memory based on conversationId
